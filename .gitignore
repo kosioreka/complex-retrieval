@@ -102,3 +102,4 @@ ENV/
 
 *.cbor
 *.qrels
+*.idea/
