@@ -44,11 +44,15 @@ with open(outlines, 'rb') as f:
         if len(p.outline())>2:
             print('heading 1=', p.outline()[0])
         # print('deep headings= ',  p.deep_headings_list())
+        deep = p.deep_headings_list()
+        flat = p.flat_headings_list()
+        if len(deep) != len(flat):
+            a = deep
         print('deep headings= ', [h[0].heading for h in p.deep_headings_list()])
 
         # print('flat headings= ', p.flat_headings_list())
-        print('flat headings= ', [h[0].heading for h in p.flat_headings_list()])
-        break
+        print('flat headings= ', [h[0].heading for h in p.flat_headings_list()]) #h[0] is the main heading, h[1] if exists contains a child section
+        # break
 
 
 with open(paragraphs, 'rb') as f:
