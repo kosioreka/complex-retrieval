@@ -1,24 +1,39 @@
 import argparse
+import operator
+from trec_car.format_runs import *
+
+from BM25_2 import BM25
 from text_preprocess import Preprocessing
 
 
 def main():
-
     args = parse_arguments()
     preprocessing = Preprocessing(args.outline_file, args.paragraph_file)
-    queries_dict = preprocessing.get_queries()
-    paragraphs_dict = preprocessing.get_paragraphs()
+    queries_dict = preprocessing.get_raw_queries()
+    paragraphs_dict = preprocessing.get_raw_paragraphs()
 
-    # paragraphs_dict = preprocessing.get_raw_paragraphs()
+    queries_list = queries_dict[0: 1]
+    bm25 = BM25(paragraphs_dict)
+    query = queries_list[0][2]
+    scores = bm25.ranked(query, 10)
 
-    # Temporal dataset downsizing
-    queries_dict = queries_dict[0:1]
-    paragraphs_dict = list(paragraphs_dict.values())[0:100]
-    #
+    rank = 1
+    for score in scores:
+        entry = RankingEntry(queries_list[0][0], score[0], rank, score[1])
+        rank += 1
 
-    for query in queries_dict:
-        print(query[2])
-        query_terms = query[2]
+    with open("test.out", mode='w', encoding='UTF-8') as f:
+        writer = f
+        temp_list = []
+        rank = 1
+        for score in scores:
+            entry = RankingEntry(queries_list[0][0], score[0], rank, score[1])
+            temp_list.append(entry)
+            rank += 1
+        format_run(writer, temp_list, exp_name='test')
+        f.close()
+
+
 
     print('end')
 
@@ -30,5 +45,6 @@ def parse_arguments():
 
     args = parser.parse_args()
     return args
+
 
 main()

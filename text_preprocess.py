@@ -13,7 +13,7 @@ class Preprocessing:
 
         self.outline_pages = self.get_pages()
         self.freq_dict = {}
-        self.raw_data = []
+        self.raw_data = {}
 
     def get_pages(self):
         with open(self.outline_file, 'rb') as f:
@@ -42,11 +42,11 @@ class Preprocessing:
     def process_paragraphs(self):
         if not self.freq_dict:
             para_dict = {}
-            raw_data = []
+            raw_data = {}
             with open(self.paragraph_file, 'rb') as f:
                 for p in iter_paragraphs(f):
                     para_dict[p.para_id] = self.preprocess_text(p.get_text(), ret="freq")
-                    raw_data.append(self.preprocess_text(p.get_text(), ret="raw"))
+                    raw_data[p.para_id] = self.preprocess_text(p.get_text(), ret="raw")
 
             self.freq_dict = para_dict
             self.raw_data = raw_data

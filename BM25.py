@@ -38,7 +38,10 @@ class BM25:
         self.dictionary.add_documents(raw_data)
 
     def buildDictionaryFromList(self, paragraphs_list):
-        self.dictionary.add_documents(paragraphs_list)
+        tmp = []
+        for key, value in paragraphs_list.items():
+            tmp.append(value)
+        self.dictionary.add_documents(tmp)
 
     def TFIDF_Generator(self, base=math.e):
         docTotalLen = 0
@@ -60,7 +63,7 @@ class BM25:
 
     def TFIDF_Generator_from_list(self, paragraphs_list, base=math.e):
         docTotalLen = 0
-        for doc in paragraphs_list:
+        for key, doc in paragraphs_list.items():
             # doc = line.strip().split(self.delimiter)
             docTotalLen += len(doc)
             self.DocLen.append(len(doc))
@@ -88,6 +91,20 @@ class BM25:
                 below = ((doc[term]) + k1 * (1 - b + b * doc_terms_len / self.DocAvgLen))
                 tmp_score.append(self.DocIDF[term] * upper / below)
             scores.append(sum(tmp_score))
+        return scores
+
+    def BM25ScoreParagraph(self, paragraph, Query=[], k1=1.5, b=0.75):
+        query_bow = self.dictionary.doc2bow(Query)
+        scores = {}
+        for idx, doc in paragraph.items():
+            commonTerms = set(dict(query_bow).keys()) & set(doc.keys())
+            tmp_score = []
+            doc_terms_len = len(doc)
+            for term in commonTerms:
+                upper = (doc[term] * (k1 + 1))
+                below = ((doc[term]) + k1 * (1 - b + b * doc_terms_len / self.DocAvgLen))
+                tmp_score.append(self.DocIDF[term] * upper / below)
+            scores[idx] = sum(tmp_score)
         return scores
 
     def TFIDF(self):
