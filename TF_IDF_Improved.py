@@ -8,11 +8,11 @@ from Ranking_Method import Ranking
 class TFIDFImproved(Ranking):
 
     def __init__(self, corpus):
-        super.__init__(corpus)
+        super().__init__(corpus)
 
     def _set_idf(self):
         for word, freq in iteritems(self.df):
-            self.idf[word] = math.log(self.corpus_size + 1) / self.fd[word]
+            self.idf[word] = math.log(self.corpus_size + 1) / self.df[word]
 
     def _get_score(self, query, index):
         score = 0

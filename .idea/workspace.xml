@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e88284cb-99a7-416b-8b14-95676f623888" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Ranking_Method.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TF_IDF_Improved.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BM25.py" beforeDir="false" afterPath="$PROJECT_DIR$/BM25.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rank_document.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/rank_document.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ranking_Method.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ranking_Method.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TF_IDF_Improved.py" beforeDir="false" afterPath="$PROJECT_DIR$/TF_IDF_Improved.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rank_document.py" beforeDir="false" afterPath="$PROJECT_DIR$/rank_document.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/text_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/text_preprocess.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,7 +20,7 @@
       <file leaf-file-name="read_data_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/read_data_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
+            <state relative-caret-position="697">
               <caret line="53" column="83" selection-start-line="53" selection-start-column="83" selection-end-line="53" selection-end-column="83" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
@@ -33,7 +32,7 @@
       <file leaf-file-name="read_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trec_car/read_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1530">
+            <state relative-caret-position="17">
               <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
             </state>
           </provider>
@@ -42,8 +41,8 @@
       <file leaf-file-name="text_preprocess.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/text_preprocess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="86" column="22" lean-forward="true" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
+            <state relative-caret-position="-577">
+              <caret line="44" column="20" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="20" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -51,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rank_document.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="rank_document.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rank_document.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            <state relative-caret-position="137">
+              <caret line="38" selection-start-line="38" selection-end-line="39" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -63,8 +62,8 @@
       <file leaf-file-name="format_runs.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trec_car/format_runs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-94">
-              <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+            <state relative-caret-position="748">
+              <caret line="46" column="1" lean-forward="true" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -72,8 +71,8 @@
       <file leaf-file-name="TF_IDF_Improved.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TF_IDF_Improved.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="-44">
+              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -84,17 +83,23 @@
       <file leaf-file-name="BM25.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BM25.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="15" lean-forward="true" selection-start-line="3" selection-end-line="4" />
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+              <folding>
+                <element signature="e#16#27#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Ranking_Method.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Ranking_Method.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Ranking_Method.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+            <state relative-caret-position="273">
+              <caret line="58" column="35" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -127,11 +132,11 @@
         <option value="$PROJECT_DIR$/venv/Lib/site-packages/nltk/internals.py" />
         <option value="$PROJECT_DIR$/venv/Lib/site-packages/nltk/compat.py" />
         <option value="$PROJECT_DIR$/BM25_2.py" />
-        <option value="$PROJECT_DIR$/rank_document.py" />
-        <option value="$PROJECT_DIR$/text_preprocess.py" />
-        <option value="$PROJECT_DIR$/TF_IDF_Improved.py" />
         <option value="$PROJECT_DIR$/BM25.py" />
+        <option value="$PROJECT_DIR$/TF_IDF_Improved.py" />
+        <option value="$PROJECT_DIR$/text_preprocess.py" />
         <option value="$PROJECT_DIR$/Ranking_Method.py" />
+        <option value="$PROJECT_DIR$/rank_document.py" />
       </list>
     </option>
   </component>
@@ -307,7 +312,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval_framework.py" />
-      <option name="PARAMETERS" value="all.test200.cbor.hierarchical.qrels test.out" />
+      <option name="PARAMETERS" value="all.test200.cbor.hierarchical.qrels bm25.out" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -398,18 +403,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rank_document.py</url>
-          <line>42</line>
+          <line>59</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rank_document.py</url>
-          <line>31</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/rank_document.py</url>
-          <line>29</line>
-          <option name="timeStamp" value="11" />
+          <line>17</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -419,7 +419,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="16" />
+      <option name="time" value="18" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -471,13 +471,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trec_car/read_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/argument_parser.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/nltk/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -500,16 +493,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/read_data_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="83" selection-start-line="53" selection-start-column="83" selection-end-line="53" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rank_document.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
@@ -524,51 +507,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trec_car/format_runs.py">
+    <entry file="file://$PROJECT_DIR$/BM25.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-94">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/text_preprocess.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="86" column="22" lean-forward="true" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#16#27#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rank_document.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TF_IDF_Improved.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="-44">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BM25.py">
+    <entry file="file://$PROJECT_DIR$/Ranking_Method.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="15" lean-forward="true" selection-start-line="3" selection-end-line="4" />
+        <state relative-caret-position="273">
+          <caret line="58" column="35" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Ranking_Method.py">
+    <entry file="file://$PROJECT_DIR$/trec_car/format_runs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="46" column="1" lean-forward="true" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/text_preprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-577">
+          <caret line="44" column="20" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/read_data_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="53" column="83" selection-start-line="53" selection-start-column="83" selection-end-line="53" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trec_car/read_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+          <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rank_document.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="38" selection-start-line="38" selection-end-line="39" selection-end-column="51" />
         </state>
       </provider>
     </entry>

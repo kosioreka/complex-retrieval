@@ -1,6 +1,7 @@
 import argparse
 
 from BM25 import BM25
+from TF_IDF_Improved import TFIDFImproved
 from text_preprocess import Preprocessing
 from trec_car.format_runs import *
 
@@ -8,7 +9,16 @@ from trec_car.format_runs import *
 def run_bm25(queries_dict, paragraphs_dict):
     bm25 = BM25(paragraphs_dict)
     scores = bm25.ranked(queries_dict, 10)
+    return output_results(scores)
 
+
+def run_tfidf(queries_dict, paragraphs_dict):
+    tfidf = TFIDFImproved(paragraphs_dict)
+    scores = tfidf.ranked(queries_dict, 10)
+    return output_results(scores)
+
+
+def output_results(scores):
     output_entries = []
     for query_id, score in scores.items():
         rank = 1
@@ -28,6 +38,13 @@ def main():
 
     output_entries = run_bm25(queries_dict, paragraphs_dict)
     save_scores_to_file(output_entries, "bm25.out")
+
+    # output_entries = run_tfidf(queries_dict, paragraphs_dict)
+    #testing
+    paragraph = preprocessing.para_text[output_entries[0].paragraph_id]
+    print("Query:", output_entries[0].query_id, "paragraph:\n", paragraph)
+
+    # save_scores_to_file(output_entries, "tfidf.out")
 
     print('end')
 

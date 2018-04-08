@@ -55,7 +55,8 @@ class Ranking:
             score = sorted(score.items(), key=operator.itemgetter(1), reverse=True)
             score = score[0:n]
             scores[query[0]] = score
-            print("progress:", i / len(queries))
+            progress = i / len(queries)
+            print("progress:", "%.3f" % round(progress, 3))
             i += 1
 
         return scores

@@ -43,13 +43,16 @@ class Preprocessing:
         if not self.freq_dict:
             para_dict = {}
             raw_data = {}
+            para_text = {}
             with open(self.paragraph_file, 'rb') as f:
                 for p in iter_paragraphs(f):
                     para_dict[p.para_id] = self.preprocess_text(p.get_text(), ret="freq")
                     raw_data[p.para_id] = self.preprocess_text(p.get_text(), ret="raw")
+                    para_text[p.para_id] = p.get_text()
 
             self.freq_dict = para_dict
             self.raw_data = raw_data
+            self.para_text = para_text
 
     def get_paragraphs(self):
         self.process_paragraphs()
