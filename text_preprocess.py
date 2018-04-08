@@ -76,13 +76,17 @@ class Preprocessing:
 
         # freq dictionary
         if ret == "freq":
-            freq_dict = {}
-            for word in text:
-                if word not in freq_dict:
-                    freq_dict[word] = 0
-                freq_dict[word] += 1
-            return freq_dict
+            return Preprocessing.WordFrequency(text)
         elif ret == "raw":
             return text
 
         return None
+
+    @staticmethod
+    def WordFrequency(text):
+        freq_dict = {}
+        for word in text:
+            if word not in freq_dict:
+                freq_dict[word] = 0
+            freq_dict[word] += 1
+        return freq_dict

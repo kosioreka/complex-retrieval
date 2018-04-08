@@ -102,4 +102,10 @@ ENV/
 
 *.cbor
 *.qrels
-*.idea/
+.idea/workspace.xml
+*.outlines
+*.paragraphs
+
+release-v1.4/
+*.out
+
