@@ -36,15 +36,16 @@ def main():
     queries_dict = preprocessing.get_raw_queries()
     paragraphs_dict = preprocessing.get_raw_paragraphs()
 
-    output_entries = run_bm25(queries_dict, paragraphs_dict)
-    save_scores_to_file(output_entries, "bm25.out")
+    # output_entries = run_bm25(queries_dict, paragraphs_dict)
+    # save_scores_to_file(output_entries, "bm25.out")
 
-    # output_entries = run_tfidf(queries_dict, paragraphs_dict)
+    output_entries = run_tfidf(queries_dict, paragraphs_dict)
+    save_scores_to_file(output_entries, "tfidf.out")
+
     #testing
     paragraph = preprocessing.para_text[output_entries[0].paragraph_id]
     print("Query:", output_entries[0].query_id, "paragraph:\n", paragraph)
 
-    # save_scores_to_file(output_entries, "tfidf.out")
 
     print('end')
 

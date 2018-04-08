@@ -1,7 +1,14 @@
 import re
+
+import tagme
 from nltk.corpus import stopwords
-from trec_car.read_data import iter_outlines, iter_paragraphs
+from trec_car.read_data import iter_outlines, iter_paragraphs, ParaLink
 from stemming.porter2 import stem
+
+GCUBE_TOKEN = "bfbfb535-3683-47c0-bd11-df06d5d96726-843339462"
+DEFAULT_TAG_API = "https://tagme.d4science.org/tagme/tag"
+DEFAULT_SPOT_API = "https://tagme.d4science.org/tagme/spot"
+DEFAULT_REL_API = "https://tagme.d4science.org/tagme/rel"
 
 
 class Preprocessing:
@@ -46,6 +53,9 @@ class Preprocessing:
             para_text = {}
             with open(self.paragraph_file, 'rb') as f:
                 for p in iter_paragraphs(f):
+                    # entities = [elem.page
+                    #             for elem in p.bodies
+                    #             if isinstance(elem, ParaLink)]# how to retrieve entities from paragraph; p@5 get a bit higher
                     para_dict[p.para_id] = self.preprocess_text(p.get_text(), ret="freq")
                     raw_data[p.para_id] = self.preprocess_text(p.get_text(), ret="raw")
                     para_text[p.para_id] = p.get_text()
@@ -66,6 +76,8 @@ class Preprocessing:
     # preprocessing of the text
     # return [freq|raw]
     def preprocess_text(self, text: str, ret):
+        # mentions = tagme.mentions(text, GCUBE_TOKEN)
+        # entities = " ".join([word.mention for word in mentions.get_mentions(0.01)])
         # TODO: annotations?
         # lower case
         text = text.lower()

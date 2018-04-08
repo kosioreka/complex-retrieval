@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e88284cb-99a7-416b-8b14-95676f623888" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ranking_Method.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ranking_Method.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TF_IDF_Improved.py" beforeDir="false" afterPath="$PROJECT_DIR$/TF_IDF_Improved.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bm25.out" beforeDir="false" afterPath="$PROJECT_DIR$/bm25.out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rank_document.py" beforeDir="false" afterPath="$PROJECT_DIR$/rank_document.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/text_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/text_preprocess.py" afterDir="false" />
     </list>
@@ -20,8 +18,8 @@
       <file leaf-file-name="read_data_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/read_data_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="53" column="83" selection-start-line="53" selection-start-column="83" selection-end-line="53" selection-end-column="83" />
+            <state relative-caret-position="1190">
+              <caret line="70" column="42" selection-start-line="70" selection-start-column="42" selection-end-line="70" selection-end-column="42" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -32,17 +30,17 @@
       <file leaf-file-name="read_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trec_car/read_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
+            <state relative-caret-position="-431">
+              <caret line="501" column="6" selection-start-line="501" selection-start-column="6" selection-end-line="501" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="text_preprocess.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="text_preprocess.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/text_preprocess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-577">
-              <caret line="44" column="20" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="20" />
+            <state relative-caret-position="8">
+              <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -50,11 +48,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rank_document.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/tagme/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rank_document.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rank_document.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="38" selection-start-line="38" selection-end-line="39" selection-end-column="51" />
+            <state relative-caret-position="212">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
         </entry>
@@ -63,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/trec_car/format_runs.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="748">
-              <caret line="46" column="1" lean-forward="true" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
+              <caret line="46" column="1" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -134,16 +141,17 @@
         <option value="$PROJECT_DIR$/BM25_2.py" />
         <option value="$PROJECT_DIR$/BM25.py" />
         <option value="$PROJECT_DIR$/TF_IDF_Improved.py" />
-        <option value="$PROJECT_DIR$/text_preprocess.py" />
         <option value="$PROJECT_DIR$/Ranking_Method.py" />
         <option value="$PROJECT_DIR$/rank_document.py" />
+        <option value="$PROJECT_DIR$/text_preprocess.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
-    <option name="width" value="697" />
-    <option name="height" value="735" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -157,6 +165,11 @@
             <path>
               <item name="complex-retrieval" type="b2602c69:ProjectViewProjectNode" />
               <item name="complex-retrieval" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="complex-retrieval" type="b2602c69:ProjectViewProjectNode" />
+              <item name="complex-retrieval" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -298,7 +311,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.rank">
+  <component name="RunManager" selected="Python.eval">
     <configuration name="eval" type="PythonConfigurationType" factoryName="Python">
       <module name="complex-retrieval" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -312,7 +325,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval_framework.py" />
-      <option name="PARAMETERS" value="all.test200.cbor.hierarchical.qrels bm25.out" />
+      <option name="PARAMETERS" value="all.test200.cbor.hierarchical.qrels tfidf.out" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -330,7 +343,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rank_document.py" />
-      <option name="PARAMETERS" value="all.test200.cbor.outlines train.pages.cbor-paragraphs.cbor" />
+      <option name="PARAMETERS" value="all.test200.cbor.outlines all.test200.cbor.paragraphs" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -384,7 +397,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.15103339" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3354531" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990461" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -403,7 +416,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/rank_document.py</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -419,7 +432,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="18" />
+      <option name="time" value="27" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -517,16 +530,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TF_IDF_Improved.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-44">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Ranking_Method.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -540,41 +543,58 @@
     <entry file="file://$PROJECT_DIR$/trec_car/format_runs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="748">
-          <caret line="46" column="1" lean-forward="true" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
+          <caret line="46" column="1" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/text_preprocess.py">
+    <entry file="file://$PROJECT_DIR$/trec_car/read_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-577">
-          <caret line="44" column="20" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-431">
+          <caret line="501" column="6" selection-start-line="501" selection-start-column="6" selection-end-line="501" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/read_data_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="53" column="83" selection-start-line="53" selection-start-column="83" selection-end-line="53" selection-end-column="83" />
+        <state relative-caret-position="1190">
+          <caret line="70" column="42" selection-start-line="70" selection-start-column="42" selection-end-line="70" selection-end-column="42" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trec_car/read_data.py">
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/tagme/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
+        <state relative-caret-position="170">
+          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TF_IDF_Improved.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-44">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rank_document.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="38" selection-start-line="38" selection-end-line="39" selection-end-column="51" />
+        <state relative-caret-position="212">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/text_preprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8">
+          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
