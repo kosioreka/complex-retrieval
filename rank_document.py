@@ -1,9 +1,23 @@
 import argparse
-import operator
+
+from BM25 import BM25
+from text_preprocess import Preprocessing
 from trec_car.format_runs import *
 
-from BM25_2 import BM25
-from text_preprocess import Preprocessing
+
+def run_bm25(queries_dict, paragraphs_dict):
+    bm25 = BM25(paragraphs_dict)
+    scores = bm25.ranked(queries_dict, 10)
+
+    output_entries = []
+    for query_id, score in scores.items():
+        rank = 1
+        for paragraph_score in score:
+            entry = RankingEntry(query_id, paragraph_score[0], rank, paragraph_score[1])
+            output_entries.append(entry)
+            rank += 1
+
+    return output_entries
 
 
 def main():
@@ -12,30 +26,20 @@ def main():
     queries_dict = preprocessing.get_raw_queries()
     paragraphs_dict = preprocessing.get_raw_paragraphs()
 
-    queries_list = queries_dict[0: 1]
-    bm25 = BM25(paragraphs_dict)
-    query = queries_list[0][2]
-    scores = bm25.ranked(query, 10)
-
-    rank = 1
-    for score in scores:
-        entry = RankingEntry(queries_list[0][0], score[0], rank, score[1])
-        rank += 1
-
-    with open("test.out", mode='w', encoding='UTF-8') as f:
-        writer = f
-        temp_list = []
-        rank = 1
-        for score in scores:
-            entry = RankingEntry(queries_list[0][0], score[0], rank, score[1])
-            temp_list.append(entry)
-            rank += 1
-        format_run(writer, temp_list, exp_name='test')
-        f.close()
-
-
+    output_entries = run_bm25(queries_dict, paragraphs_dict)
+    save_scores_to_file(output_entries, "bm25.out")
 
     print('end')
+
+
+def save_scores_to_file(output_entries, filename="test.out"):
+    with open(filename, mode='w', encoding='UTF-8') as f:
+        writer = f
+        temp_list = []
+        for entry in output_entries:
+            temp_list.append(entry)
+        format_run(writer, temp_list, exp_name='test')
+        f.close()
 
 
 def parse_arguments():

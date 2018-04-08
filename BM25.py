@@ -1,156 +1,88 @@
-import gensim
-from gensim import corpora
+# coding=utf-8
+
 import math
+import operator
+
+from six import iteritems
 
 
-class BM25:
-    # our implementation
-    def __init__(self, paragraphs_list):
-        self.dictionary = corpora.Dictionary()
-        self.DF = {}
-        self.DocTF = []
-        self.DocIDF = {}
-        self.N = 0
-        self.DocAvgLen = 0
-        # self.fn_docs = fn_docs
-        self.DocLen = []
-        self.buildDictionaryFromList(paragraphs_list)
-        self.TFIDF_Generator_from_list(paragraphs_list)
+# Implementation from https://en.wikipedia.org/wiki/Okapi_BM25
+class BM25(object):
+    PARAM_K1 = 1.2
+    PARAM_B = 0.75
+    EPSILON = 0.25
 
-    # def __init__(self, fn_docs, delimiter):
-    #
-    #     self.dictionary = corpora.Dictionary()
-    #     self.DF = {}
-    #     self.delimiter = delimiter
-    #     self.DocTF = []
-    #     self.DocIDF = {}
-    #     self.N = 0
-    #     self.DocAvgLen = 0
-    #     self.fn_docs = fn_docs
-    #     self.DocLen = []
-    #     self.buildDictionary()
-    #     self.TFIDF_Generator()
+    def __init__(self, corpus):
+        self.corpus_size = len(corpus)
+        self.dl = {}
+        corpus_len_sum = 0
+        for k, d in corpus.items():
+            self.dl[k] = float(len(d))
+            corpus_len_sum += float(len(d))
+        self.avgdl = corpus_len_sum / self.corpus_size
+        self.corpus = corpus
+        self.f = {}
+        self.df = {}
+        self.idf = {}
+        self.average_idf = 0
+        self._initialize()
 
-    def buildDictionary(self):
-        raw_data = []
-        for line in open(self.fn_docs):
-            raw_data.append(line.strip().split(self.delimiter))
-        self.dictionary.add_documents(raw_data)
+    def _initialize(self):
+        for idx, document in self.corpus.items():
+            frequencies = {}
+            for word in document:
+                if word not in frequencies:
+                    frequencies[word] = 0
+                frequencies[word] += 1
+            self.f[idx] = frequencies
 
-    def buildDictionaryFromList(self, paragraphs_list):
-        tmp = []
-        for key, value in paragraphs_list.items():
-            tmp.append(value)
-        self.dictionary.add_documents(tmp)
+            for word, freq in iteritems(frequencies):
+                if word not in self.df:
+                    self.df[word] = 0
+                self.df[word] += 1
 
-    def TFIDF_Generator(self, base=math.e):
-        docTotalLen = 0
-        for line in open(self.fn_docs):
-            doc = line.strip().split(self.delimiter)
-            docTotalLen += len(doc)
-            self.DocLen.append(len(doc))
-            # print(self.dictionary.doc2bow(doc))
-            bow = dict([(term, freq * 1.0 / len(doc)) for term, freq in self.dictionary.doc2bow(doc)])
-            for term, tf in bow.items():
-                if term not in self.DF:
-                    self.DF[term] = 0
-                self.DF[term] += 1
-            self.DocTF.append(bow)
-            self.N = self.N + 1
-        for term in self.DF:
-            self.DocIDF[term] = math.log((self.N - self.DF[term] + 0.5) / (self.DF[term] + 0.5), base)
-        self.DocAvgLen = docTotalLen / self.N
+        for word, freq in iteritems(self.df):
+            self.idf[word] = math.log(self.corpus_size - freq + 0.5) - math.log(freq + 0.5)
 
-    def TFIDF_Generator_from_list(self, paragraphs_list, base=math.e):
-        docTotalLen = 0
-        for key, doc in paragraphs_list.items():
-            # doc = line.strip().split(self.delimiter)
-            docTotalLen += len(doc)
-            self.DocLen.append(len(doc))
-            # print(self.dictionary.doc2bow(doc))
-            bow = dict([(term, freq * 1.0 / len(doc)) for term, freq in self.dictionary.doc2bow(doc)])
-            for term, tf in bow.items():
-                if term not in self.DF:
-                    self.DF[term] = 0
-                self.DF[term] += 1
-            self.DocTF.append(bow)
-            self.N = self.N + 1
-        for term in self.DF:
-            self.DocIDF[term] = math.log((self.N - self.DF[term] + 0.5) / (self.DF[term] + 0.5), base)
-        self.DocAvgLen = docTotalLen / self.N
+        self.average_idf = sum(map(lambda k: float(self.idf[k]), self.idf.keys())) / len(self.idf.keys())
 
-    def BM25Score(self, Query=[], k1=1.5, b=0.75):
-        query_bow = self.dictionary.doc2bow(Query)
-        scores = []
-        for idx, doc in enumerate(self.DocTF):
-            commonTerms = set(dict(query_bow).keys()) & set(doc.keys())
-            tmp_score = []
-            doc_terms_len = self.DocLen[idx]
-            for term in commonTerms:
-                upper = (doc[term] * (k1 + 1))
-                below = ((doc[term]) + k1 * (1 - b + b * doc_terms_len / self.DocAvgLen))
-                tmp_score.append(self.DocIDF[term] * upper / below)
-            scores.append(sum(tmp_score))
-        return scores
+    def _get_score(self, query, index):
+        score = 0
+        for word in query:
+            if word not in self.f[index]:
+                continue
+            idf = self.idf[word] if self.idf[word] >= 0 else self.EPSILON * self.average_idf
+            score += (idf * self.f[index][word] * (self.PARAM_K1 + 1) / (self.f[index][word] + self.PARAM_K1 * (
+                        1 - self.PARAM_B + self.PARAM_B * self.dl[index] / self.avgdl)))
+        return score
 
-    def BM25ScoreParagraph(self, paragraph, Query=[], k1=1.5, b=0.75):
-        query_bow = self.dictionary.doc2bow(Query)
+    def _get_scores(self, query):
         scores = {}
-        for idx, doc in paragraph.items():
-            commonTerms = set(dict(query_bow).keys()) & set(doc.keys())
-            tmp_score = []
-            doc_terms_len = len(doc)
-            for term in commonTerms:
-                upper = (doc[term] * (k1 + 1))
-                below = ((doc[term]) + k1 * (1 - b + b * doc_terms_len / self.DocAvgLen))
-                tmp_score.append(self.DocIDF[term] * upper / below)
-            scores[idx] = sum(tmp_score)
+        # for index in xrange(self.corpus_size):
+        for index, doc in self.corpus.items():
+            score = self._get_score(query, index)
+            scores[index] = score
         return scores
 
-    def TFIDF(self):
-        tfidf = []
-        for doc in self.DocTF:
-            doc_tfidf = [(term, tf * self.DocIDF[term]) for term, tf in doc.items()]
-            # doc_tfidf.sort()
-            tfidf.append(doc_tfidf)
-        return tfidf
+    def ranked(self, queries, n):
+        """Returns the `n` most relevant documents according to `query`"""
+        scores = {}
 
-    # def Items(self):
-    # Return a list [(term_idx, term_desc),]
-    # items = self.dictionary.items()
-    # sorted(items)
-    # return items
+        i = 1
+        for query in queries:
+            score = self._get_scores(query[2])
+            score = sorted(score.items(), key=operator.itemgetter(1), reverse=True)
+            score = score[0:n]
+            scores[query[0]] = score
+            print("progress:", i/len(queries))
+            i+=1
 
+        return scores
+        # scores = [(index, score) for index, score in enumerate(self._get_scores(query))]
+        # scores.sort(key=lambda x: x[1], reverse=True)
+        # indexes, _ = self._unpack(scores)
+        # return indexes[:length]
 
-if __name__ == '__main__':
-    # mycorpus.txt is as following:
-    '''
-    Human machine interface for lab abc computer applications\
-    A survey of user opinion of computer system response time\
-    The EPS user interface management system\
-    System and human system engineering testing of EPS\
-    Relation of user perceived response time to error measurement\
-    The generation of random binary unordered trees\
-    The intersection graph of paths in trees\
-    Graph IV Widths of trees and well quasi ordering\
-    Graph minors A survey\
-    response\
-    '''
-    fn_docs = 'mycorpus.txt'
-    bm25 = BM25(fn_docs, ' ')
-    # Query = 'The intersection graph of paths in trees survey Graph'
-    Query = 'response'
-    Query = Query.split()
-    scores = bm25.BM25Score(Query)
-    tfidf = bm25.TFIDF()
-    bm25.dictionary.get(0)
-    # print(bm25.Items())
-    for i, tfidfscore in enumerate(tfidf):
-        print(i, tfidfscore)
-
-    print()
-
-    for i, bm25score in enumerate(scores):
-        print(i, bm25score)
-
-    print()
+    @staticmethod
+    def _unpack(tuples):
+        return zip(*tuples)
