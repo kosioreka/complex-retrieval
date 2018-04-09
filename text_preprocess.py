@@ -2,6 +2,7 @@ import re
 
 import tagme
 from nltk.corpus import stopwords
+from nltk.corpus import wordnet as wn
 from trec_car.read_data import iter_outlines, iter_paragraphs, ParaLink
 from stemming.porter2 import stem
 
@@ -37,13 +38,13 @@ class Preprocessing:
         return query_list
 
     # returns each query (list entry) as a [query_id, query_name, array of words]
-    def get_raw_queries(self):
+    def get_raw_queries(self, qe_synonyms=False):
         query_list = []
         for page in self.outline_pages:
             for sections in page.flat_headings_list():
                 query_name = " ".join([page.page_name] + [section.heading for section in sections])
                 query_id = "/".join([page.page_id] + [section.headingId for section in sections])
-                query_list.append((query_id, query_name, self.preprocess_text(query_name, ret="raw")))
+                query_list.append((query_id, query_name, self.preprocess_text(query_name, ret="raw", qe_synonyms=qe_synonyms)))
         return query_list
 
     def process_paragraphs(self):
@@ -75,7 +76,7 @@ class Preprocessing:
 
     # preprocessing of the text
     # return [freq|raw]
-    def preprocess_text(self, text: str, ret):
+    def preprocess_text(self, text: str, ret, qe_synonyms=False):
         # mentions = tagme.mentions(text, GCUBE_TOKEN)
         # entities = " ".join([word.mention for word in mentions.get_mentions(0.01)])
         # TODO: annotations?
@@ -89,6 +90,10 @@ class Preprocessing:
         text = [stem(word) for word in text]
         # TODO: Query expansion for limitations like: irregular verbs, synonyms...?
 
+        # adding synonyms to query
+        if qe_synonyms:
+            text = self.query_expansion_synonyms(text)
+
         # freq dictionary
         if ret == "freq":
             return Preprocessing.WordFrequency(text)
@@ -96,6 +101,21 @@ class Preprocessing:
             return text
 
         return None
+
+    @staticmethod
+    def query_expansion_synonyms(text):
+        word_synonyms = set()
+        for t in text:
+            # print(t, "synonyms:")
+            for ss in wn.synsets(t):  # Each synset represents a diff concept.
+                # print(ss.definition())
+                # print(ss.lemma_names())
+                word_synonyms.update(ss.lemma_names())
+            # print("----------------------")
+        word_synonyms.update(text)
+        text = word_synonyms
+        text = [re.sub(r'_', ' ', t) for t in text]
+        return text
 
     @staticmethod
     def WordFrequency(text):

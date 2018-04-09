@@ -33,14 +33,14 @@ def output_results(scores):
 def main():
     args = parse_arguments()
     preprocessing = Preprocessing(args.outline_file, args.paragraph_file)
-    queries_dict = preprocessing.get_raw_queries()
+    queries_dict = preprocessing.get_raw_queries(qe_synonyms=True)
     paragraphs_dict = preprocessing.get_raw_paragraphs()
 
     # output_entries = run_bm25(queries_dict, paragraphs_dict)
-    # save_scores_to_file(output_entries, "bm25.out")
+    # save_scores_to_file(output_entries, "bm25_synonyms.out")
 
     output_entries = run_tfidf(queries_dict, paragraphs_dict)
-    save_scores_to_file(output_entries, "tfidf.out")
+    save_scores_to_file(output_entries, "tfidf_synonyms.out")
 
     #testing
     paragraph = preprocessing.para_text[output_entries[0].paragraph_id]
