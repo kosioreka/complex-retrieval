@@ -4,6 +4,7 @@ from BM25 import BM25
 from TF_IDF_Improved import TFIDFImproved
 from text_preprocess import Preprocessing
 from trec_car.format_runs import *
+from gensim.models import Word2Vec
 
 
 def run_bm25(queries_dict, paragraphs_dict):
@@ -32,9 +33,16 @@ def output_results(scores):
 
 def main():
     args = parse_arguments()
+
+    # preprocessing = Preprocessing("test200.v2.0\all.test200.cbor.outlines", "test200.v2.0\all.test200.cbor.paragraphs")
     preprocessing = Preprocessing(args.outline_file, args.paragraph_file)
-    queries_dict = preprocessing.get_raw_queries(qe_synonyms=True)
+    queries_dict = preprocessing.get_raw_queries(qe_synonyms=False)
     paragraphs_dict = preprocessing.get_raw_paragraphs()
+
+
+
+
+
 
     # output_entries = run_bm25(queries_dict, paragraphs_dict)
     # save_scores_to_file(output_entries, "bm25_synonyms.out")
