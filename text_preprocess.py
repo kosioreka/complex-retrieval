@@ -1,10 +1,10 @@
 import re
 
-import tagme
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet as wn
-from trec_car.read_data import iter_outlines, iter_paragraphs, ParaLink
+
 from stemming.porter2 import stem
+from trec_car.read_data import iter_outlines, iter_paragraphs
 
 GCUBE_TOKEN = "bfbfb535-3683-47c0-bd11-df06d5d96726-843339462"
 DEFAULT_TAG_API = "https://tagme.d4science.org/tagme/tag"
@@ -22,6 +22,8 @@ class Preprocessing:
         self.outline_pages = self.get_pages()
         self.freq_dict = {}
         self.raw_data = {}
+
+        self.process_paragraphs()
 
     def get_pages(self):
         with open(self.outline_file, 'rb') as f:
@@ -44,7 +46,8 @@ class Preprocessing:
             for sections in page.flat_headings_list():
                 query_name = " ".join([page.page_name] + [section.heading for section in sections])
                 query_id = "/".join([page.page_id] + [section.headingId for section in sections])
-                query_list.append((query_id, query_name, self.preprocess_text(query_name, ret="raw", qe_synonyms=qe_synonyms)))
+                query_list.append(
+                    (query_id, query_name, self.preprocess_text(query_name, ret="raw", qe_synonyms=qe_synonyms)))
         return query_list
 
     def process_paragraphs(self):
@@ -125,3 +128,48 @@ class Preprocessing:
                 freq_dict[word] = 0
             freq_dict[word] += 1
         return freq_dict
+
+    def preprocess_qrels(self, qrels):
+        query_id_mapping = {}
+        paragraph_id_mapping = {}
+        query_id_mapping_index = 0
+        paragraph_id_mapping_index = 0
+        query_paragraph_id_tmp = {}
+        with open(qrels, 'rb') as f:
+            last_query_id = None
+            rank = 1
+            for p in f.readlines():
+                splitted = p.split()
+                query_id = splitted[0].decode("utf-8")
+                paragraph_id = splitted[2].decode("utf-8")
+                if query_id is not None and query_id != "":
+                    query_id_mapping[query_id] = query_id_mapping_index
+
+                    if query_id != last_query_id:
+                        rank = 1
+                    last_query_id = query_id
+
+                    if query_paragraph_id_tmp.get(query_id_mapping_index) is None:
+                        query_paragraph_id_tmp[query_id_mapping_index] = {}
+
+                    if paragraph_id is not None and paragraph_id != '':
+                        paragraph_id_mapping[paragraph_id] = paragraph_id_mapping_index
+                        query_paragraph_id_tmp[query_id_mapping_index][paragraph_id_mapping_index] = rank
+                        rank += 1
+
+                    query_id_mapping_index += 1
+                    paragraph_id_mapping_index += 1
+
+
+        # query_paragraph = {}
+        # for query, paragraphs in query_paragraph_id_tmp.items():
+        #     for paragraph_id, rank in paragraphs.items():
+        #
+        #         if query_paragraph.get(query) is None:
+        #             query_paragraph[query] = {}
+        #
+        #         paragraph_array = self.raw_data[paragraph_id]
+        #         paragraph_text = ' '.join(str(x) for x in paragraph_array)
+        #         query_paragraph[query][paragraph_text] = rank
+        print("done")
+        return query_paragraph_id_tmp, query_id_mapping, paragraph_id_mapping

@@ -103,22 +103,25 @@ def harvest(source, query_id, doc_id=None, default=0):
         if is_pd:
             score = source.get((query_id, doc_id), default)
         else:
-            # default dict or ndarray
-            scores = source[query_id]
-            # no special treatment for ndarray since we want to raise exception
-            # when query id is out of bounds
             try:
-                # ok now if scores provides a get
-                # (pandas or dict), lets use it:
-                score = scores.get(doc_id, default)
-            except AttributeError:
-                # try the brute force access
+                # default dict or ndarray
+                scores = source[query_id]
+                # no special treatment for ndarray since we want to raise exception
+                # when query id is out of bounds
                 try:
-                    score = scores[doc_id]
-                # the user should be aware when he wants to index his stuff
-                # by numpy indexing: only int doc ids allowed, of course.
-                except IndexError:
-                    score = default
+                    # ok now if scores provides a get
+                    # (pandas or dict), lets use it:
+                    score = scores.get(doc_id, default)
+                except AttributeError:
+                    # try the brute force access
+                    try:
+                        score = scores[doc_id]
+                    # the user should be aware when he wants to index his stuff
+                    # by numpy indexing: only int doc ids allowed, of course.
+                    except IndexError:
+                        score = default
+            except KeyError:
+                score = default
 
         return score
 
