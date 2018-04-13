@@ -14,8 +14,8 @@ def save_scores_to_file(output_entries, filename="test.out"):
         f.close()
 
 
-def create_save_model(sentences, total_words, save = True):
-    model = Doc2Vec(alpha=0.025, min_alpha=0.025)  # use fixed learning rate
+def create_save_model(sentences, total_words, save=True):
+    model = Doc2Vec(dm=0, dbow_words=1, alpha=0.025, min_alpha=0.025)  # use fixed learning rate
     model.build_vocab(sentences)
 
     for epoch in range(10):
@@ -25,7 +25,7 @@ def create_save_model(sentences, total_words, save = True):
         model.min_alpha = model.alpha  # fix the learning rate, no decay
 
     if save:
-        model.save('doc2vec_models/test200.v2.0_all.test200.cbor.paragraphs_2.doc2vec')
+        model.save('doc2vec_models/test200.v2.0_all.test200.cbor.paragraphs_3.doc2vec')
     return model
 
 
@@ -43,8 +43,8 @@ for p_id, p_text in paragraphs_dict.items():
     total_words += len(p_text)
     paragraph_id_mapping_index += 1
 
-model = create_save_model(sentences, total_words, save=False)
-# model = Doc2Vec.load('doc2vec_models/test200.v2.0_all.test200.cbor.paragraphs_2.doc2vec')
+# model = create_save_model(sentences, total_words, save=False)
+model = Doc2Vec.load('doc2vec_models/test200.v2.0_all.test200.cbor.paragraphs_3.doc2vec')
 
 # query_sentence = queries_list[10][2]
 # most_similar = model.docvecs.most_similar(positive=[model.infer_vector(query_sentence)], topn=5)
@@ -66,6 +66,7 @@ for query in queries_list:
     query_id = query[0]
     query_sentence = query[2]
     score = model.docvecs.most_similar(positive=[model.infer_vector(query_sentence)], topn=10)
+    # score = model.most_similar_cosmul(positive=[model.infer_vector(query_sentence)], topn=10)
 
     for paragraph_score in score:
         par_id = paragraph_score[0]
@@ -75,6 +76,5 @@ for query in queries_list:
         entry = RankingEntry(query_id, original_par_id, rank, par_score)
         output_entries.append(entry)
         rank += 1
-
 
 save_scores_to_file(output_entries, "doc2vec.out")
