@@ -27,8 +27,23 @@ with open(articles, 'rb') as f:
             print('heading 1=', p.outline()[0].__str__())
 
             print('deep headings= ', [ (section.heading, len(children)) for (section, children) in p.deep_headings_list()])
-
-            print('flat headings= ' ,["/".join([section.heading for section in sectionpath]) for sectionpath in p.flat_headings_list()])
+            flat_headings = {}
+            sections_list = p.flat_headings_list()
+            for sectionpath in sections_list:
+                #section path gives hierarchy of the sections as a list
+                list1 = [" / ".join([section.heading for section in sectionpath])] # returns sectionpath[0] / sectionpath[1]...
+                para_children = []
+                for cb in sectionpath[-1].children:
+                    if hasattr(cb, 'paragraph'):
+                        para_children.append(' '.join(
+                            [c.text if isinstance(c, ParaText) else c.anchor_text for c in cb.paragraph.bodies]))
+                    elif hasattr(cb, 'body'):
+                        para_children.append(' '.join(
+                            [c.text if isinstance(c, ParaText) else c.anchor_text for c in cb.body.bodies]))
+                section = [(p.page_name+" / ") + l for l in list1]
+                flat_headings[section[0]] = ' '.join(para_children)
+            print('flat headings1= ', [s for s in flat_headings])
+            print('flat headings=  ' ,["/".join([section.heading for section in sectionpath]) for sectionpath in p.flat_headings_list()])
         break
 # exit(0)
 
@@ -50,9 +65,10 @@ with open(outlines, 'rb') as f:
             a = deep
         print('deep headings= ', [h[0].heading for h in p.deep_headings_list()])
 
+
         # print('flat headings= ', p.flat_headings_list())
         print('flat headings= ', [h[0].heading for h in p.flat_headings_list()]) #h[0] is the main heading, h[1] if exists contains a child section
-        # break
+        break
 
 
 with open(paragraphs, 'rb') as f:

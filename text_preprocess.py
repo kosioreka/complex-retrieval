@@ -4,7 +4,7 @@ from nltk.corpus import stopwords
 from nltk.corpus import wordnet as wn
 
 from stemming.porter2 import stem
-from trec_car.read_data import iter_outlines, iter_paragraphs
+from trec_car.read_data import iter_outlines, iter_paragraphs, iter_pages, ParaText
 
 GCUBE_TOKEN = "bfbfb535-3683-47c0-bd11-df06d5d96726-843339462"
 DEFAULT_TAG_API = "https://tagme.d4science.org/tagme/tag"
@@ -67,6 +67,30 @@ class Preprocessing:
             self.freq_dict = para_dict
             self.raw_data = raw_data
             self.para_text = para_text
+
+    def process_article(self, article_file):
+        with open(article_file, 'rb') as f:
+            for p in iter_pages(f):
+                if len(p.outline()) > 0:
+                    headings_para_dict = {}
+                    sections_list = p.flat_headings_list()
+                    for section_path in sections_list:
+                        # section path gives hierarchy of the sections as a list
+                        # returns section_path[0] / section_path[1]...
+                        list1 = [" / ".join([section.heading for section in section_path])]
+                        para_children = []
+                        # taking last child (the lowest in hierarchy heading)
+                        for cb in section_path[-1].children:
+                            if hasattr(cb, 'paragraph'):
+                                para_children.append(' '.join(
+                                    [c.text if isinstance(c, ParaText) else c.anchor_text for c in
+                                     cb.paragraph.bodies]))
+                            elif hasattr(cb, 'body'):
+                                para_children.append(' '.join(
+                                    [c.text if isinstance(c, ParaText) else c.anchor_text for c in cb.body.bodies]))
+                        section = [(p.page_name + " / ") + l for l in list1]
+                        headings_para_dict[section[0]] = ' '.join(para_children)
+         return headings_para_dict
 
     def get_paragraphs(self):
         self.process_paragraphs()
