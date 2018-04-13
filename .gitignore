@@ -102,7 +102,7 @@ ENV/
 
 *.cbor
 *.qrels
-.idea/workspace.xml
+.idea/
 *.outlines
 *.paragraphs
 

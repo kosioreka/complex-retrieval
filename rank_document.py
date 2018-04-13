@@ -4,6 +4,7 @@ from BM25 import BM25
 from TF_IDF_Improved import TFIDFImproved
 from text_preprocess import Preprocessing
 from trec_car.format_runs import *
+from word2vec import Word2Vec
 
 
 def run_bm25(queries_dict, paragraphs_dict):
@@ -15,6 +16,16 @@ def run_bm25(queries_dict, paragraphs_dict):
 def run_tfidf(queries_dict, paragraphs_dict):
     tfidf = TFIDFImproved(paragraphs_dict)
     scores = tfidf.ranked(queries_dict, 10)
+    return output_results(scores)
+
+def run_word2vec(queries_dict, paragraphs_dict):
+    sentences = []
+    for q in queries_dict:
+        sentences.append(q[2])
+    for k, v in paragraphs_dict.items():
+        sentences.append(v)
+    word2vec = Word2Vec(sentences, paragraphs_dict)
+    scores = word2vec.ranked(queries_dict, 10)
     return output_results(scores)
 
 
@@ -39,8 +50,11 @@ def main():
     # output_entries = run_bm25(queries_dict, paragraphs_dict)
     # save_scores_to_file(output_entries, "bm25.out")
 
-    output_entries = run_tfidf(queries_dict, paragraphs_dict)
-    save_scores_to_file(output_entries, "tfidf.out")
+    # output_entries = run_tfidf(queries_dict, paragraphs_dict)
+    # save_scores_to_file(output_entries, "tfidf.out")
+
+    output_entries = run_word2vec(queries_dict, paragraphs_dict)
+    save_scores_to_file(output_entries, "word2vec.out")
 
     #testing
     paragraph = preprocessing.para_text[output_entries[0].paragraph_id]
