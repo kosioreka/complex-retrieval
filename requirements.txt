@@ -1,3 +1,4 @@
+gensim
 six
 cbor>=0.1.4
 typing

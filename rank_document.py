@@ -18,6 +18,16 @@ def run_tfidf(queries_dict, paragraphs_dict):
     scores = tfidf.ranked(queries_dict, 10)
     return output_results(scores)
 
+def run_word2vec(queries_dict, paragraphs_dict):
+    sentences = []
+    for q in queries_dict:
+        sentences.append(q[2])
+    for k, v in paragraphs_dict.items():
+        sentences.append(v)
+    word2vec = Word2Vec(sentences, paragraphs_dict)
+    scores = word2vec.ranked(queries_dict, 10)
+    return output_results(scores)
+
 
 def output_results(scores):
     output_entries = []
@@ -33,16 +43,9 @@ def output_results(scores):
 
 def main():
     args = parse_arguments()
-
-    # preprocessing = Preprocessing("test200.v2.0\all.test200.cbor.outlines", "test200.v2.0\all.test200.cbor.paragraphs")
     preprocessing = Preprocessing(args.outline_file, args.paragraph_file)
     queries_dict = preprocessing.get_raw_queries(qe_synonyms=False)
     paragraphs_dict = preprocessing.get_raw_paragraphs()
-
-
-
-
-
 
     # output_entries = run_bm25(queries_dict, paragraphs_dict)
     # save_scores_to_file(output_entries, "bm25_synonyms.out")
