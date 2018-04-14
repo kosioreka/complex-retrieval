@@ -17,18 +17,21 @@ class FoldsTraining(object):
         self.outlines_file = self.directory_name + 'fold-{nr}-' + self.file_name + '-outlines.cbor'
         self.paragraphs_file = self.directory_name + 'fold-{nr}-' + self.file_name + '-paragraphs.cbor'
         self.true_relevance = []
+        self.true_relevance_stemmed = []
         self.queries = []
         self.paragraphs = []
         self.corpus = []
         self.read_folds()
 
     def read_folds(self):
-        folds_amount = range(3)#5
+        folds_amount = range(1)  # 5
 
         for i in folds_amount:
-            with open(self.qrels_file.format(nr=i), 'r') as f:
-                self.true_relevance.append(load_qrels(f))
             file_reader = Preprocessing(self.outlines_file.format(nr=i), self.paragraphs_file.format(nr=i))
+            with open(self.qrels_file.format(nr=i), 'r') as f:
+                qrels = load_qrels(f)
+                self.true_relevance.append(qrels)
+                self.true_relevance_stemmed = file_reader.preprocess_stem_qrels(qrels)
             self.queries.append(file_reader.get_raw_queries())
             self.paragraphs.append(file_reader.get_raw_paragraphs())
             self.corpus.extend([v for k, v in self.paragraphs[i].items()])
@@ -36,11 +39,10 @@ class FoldsTraining(object):
     # def compute(self):
 
 
-
-
-
 def main():
     folds_train = FoldsTraining()
+    tr = folds_train.true_relevance_stemmed
+    print("X")
 
 
 if __name__ == '__main__':

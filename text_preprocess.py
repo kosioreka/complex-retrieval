@@ -101,6 +101,21 @@ class Preprocessing:
         self.process_paragraphs()
         return self.raw_data
 
+    def preprocess_stem_qrels(self, qrels_dict):
+        preprocessed_qrels = []
+
+        for qrel_id, relevance_dict in qrels_dict.items():
+            q_text = qrel_id.split("enwiki:")[1]
+            q_text = q_text.lower()
+            q_text = q_text.split("/")
+            q_text = [q.split("%20") for q in q_text]
+            q_text = [item for sublist in q_text for item in sublist]
+            q_text = [re.sub('[^A-Za-z0-9 \n]+', '', q) for q in q_text]
+            q_text = [word for word in q_text if word not in self.stop_words]
+            q_text = [stem(word) for word in q_text]
+
+            preprocessed_qrels.append([q_text, relevance_dict])
+        return preprocessed_qrels
     # preprocessing of the text
     # return [freq|raw]
     def preprocess_text(self, text: str, ret, qe_synonyms=False):
