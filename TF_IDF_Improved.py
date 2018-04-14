@@ -1,7 +1,6 @@
 import math
-
+import collections
 from six import iteritems
-
 from Ranking_Method import Ranking
 
 
@@ -22,4 +21,15 @@ class TFIDFImproved(Ranking):
             idf = self.idf[word] if self.idf[word] >= 0 else self.EPSILON * self.average_idf
             score += idf * (1 + math.log(1 + math.log(
                 self.f[index][word] / (1 - self.PARAM_B + self.PARAM_B * self.dl[index] / self.avgdl) + self.DELTA)))
+        return score
+
+    def _get_vector(self, query, index):
+        score = {}
+        for word in query:
+            if word not in self.f[index]:
+                continue
+            idf = self.idf[word] if self.idf[word] >= 0 else self.EPSILON * self.average_idf
+            score[self.w_id[word]] = idf * (1 + math.log(1 + math.log(
+                self.f[index][word] / (1 - self.PARAM_B + self.PARAM_B * self.dl[index] / self.avgdl) + self.DELTA)))
+        score = collections.OrderedDict(sorted(score.items()))
         return score

@@ -90,7 +90,7 @@ class Preprocessing:
                                     [c.text if isinstance(c, ParaText) else c.anchor_text for c in cb.body.bodies]))
                         section = [(p.page_name + " / ") + l for l in list1]
                         headings_para_dict[section[0]] = ' '.join(para_children)
-         return headings_para_dict
+        return headings_para_dict
 
     def get_paragraphs(self):
         self.process_paragraphs()

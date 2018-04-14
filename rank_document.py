@@ -80,4 +80,5 @@ def parse_arguments():
     return args
 
 
-main()
+if __name__ == '__main__':
+    main()
