@@ -7,7 +7,7 @@ from text_preprocess import Preprocessing
 
 class FoldsTraining(object):
 
-    def __init__(self, file_name='', directory_name=''):
+    def __init__(self, file_name='', directory_name='', nb_folds=2):
         if directory_name is not '':
             self.directory_name = directory_name + '/'
         else:
@@ -20,22 +20,30 @@ class FoldsTraining(object):
         self.outlines_file = self.directory_name + 'fold-{nr}-' + self.file_name + '-outlines.cbor'
         self.paragraphs_file = self.directory_name + 'fold-{nr}-' + self.file_name + '-paragraphs.cbor'
         self.true_relevance = []
+        self.true_relevance_stemmed = []
         self.queries = []
+        self.queries_all = []
         self.paragraphs = []
         self.corpus = {}
-        self.read_folds()
+        self.paragraphs_dict = {}
+        self.corpus = []
+        self.read_folds(nb_folds)
         self.write_file('train', 0)
         self.write_file('test', 1)
 
-    def read_folds(self):
-        folds_amount = range(2)  # 5
+    def read_folds(self, nb_folds=2):
+        folds_amount = range(nb_folds)  # 5
 
         for i in folds_amount:
-            with open(self.qrels_file.format(nr=i), 'r') as f:
-                self.true_relevance.append(load_qrels(f))
             file_reader = Preprocessing(self.outlines_file.format(nr=i), self.paragraphs_file.format(nr=i))
-            self.queries.append(file_reader.get_raw_queries())
+            with open(self.qrels_file.format(nr=i), 'r') as f:
+                qrels = load_qrels(f)
+                self.true_relevance.append(qrels)
+                self.true_relevance_stemmed.append(file_reader.preprocess_stem_qrels(qrels))
+            self.queries.append(file_reader.get_raw_queries(qe_synonyms=False))
+            self.queries_all.extend(file_reader.get_raw_queries())
             self.paragraphs.append(file_reader.get_raw_paragraphs())
+            self.paragraphs_dict.update(file_reader.get_raw_paragraphs())
             self.corpus.update(self.paragraphs[i])
         self.tfidf = TFIDFImproved(self.corpus)
 
@@ -81,6 +89,8 @@ class FoldsTraining(object):
 
 def main():
     folds_train = FoldsTraining()
+    tr = folds_train.true_relevance_stemmed
+    print("X")
 
 
 if __name__ == '__main__':
