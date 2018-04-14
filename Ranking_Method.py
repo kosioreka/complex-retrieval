@@ -56,8 +56,8 @@ class Ranking:
     def _get_vectors(self, query):
         scores = {}
         for index, doc in self.corpus.items():
-            score = self._get_vectors(query, index)
-            scores[index] = score
+            score_vec = self._get_vector(query, index)
+            scores[index] = score_vec
         return scores
 
     def ranked(self, queries, n):
@@ -79,6 +79,24 @@ class Ranking:
         # scores.sort(key=lambda x: x[1], reverse=True)
         # indexes, _ = self._unpack(scores)
         # return indexes[:length]
+
+    def ranked_vector(self, queries, n):
+        """Returns the `n` most relevant documents according to `query`"""
+        scores = {}
+
+        i = 1
+        for query in queries:
+            score_vectors = self._get_vectors(query[2])
+            # score_vectors = sorted(score_vectors.items(), key=operator.itemgetter(1), reverse=True)
+            # score_vectors = score_vectors[0:n]
+            rel_vectors = {k: v for k, v in score_vectors.items() if len(v) > 1}
+
+            scores[query[0]] = rel_vectors
+            progress = i / len(queries)
+            print("progress:", "%.3f" % round(progress, 3))
+            i += 1
+
+        return scores
 
     @staticmethod
     def _unpack(tuples):

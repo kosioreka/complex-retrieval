@@ -18,6 +18,7 @@ def run_tfidf(queries_dict, paragraphs_dict):
     scores = tfidf.ranked(queries_dict, 10)
     return output_results(scores)
 
+
 def run_word2vec(queries_dict, paragraphs_dict):
     sentences = []
     for q in queries_dict:
@@ -51,7 +52,7 @@ def main():
     # save_scores_to_file(output_entries, "bm25_synonyms.out")
 
     output_entries = run_tfidf(queries_dict, paragraphs_dict)
-    save_scores_to_file(output_entries, "tfidf_synonyms.out")
+    Preprocessing.save_scores_to_file(output_entries, "tfidf_synonyms.out")
 
     #testing
     paragraph = preprocessing.para_text[output_entries[0].paragraph_id]
@@ -60,15 +61,6 @@ def main():
 
     print('end')
 
-
-def save_scores_to_file(output_entries, filename="test.out"):
-    with open(filename, mode='w', encoding='UTF-8') as f:
-        writer = f
-        temp_list = []
-        for entry in output_entries:
-            temp_list.append(entry)
-        format_run(writer, temp_list, exp_name='test')
-        f.close()
 
 
 def parse_arguments():
