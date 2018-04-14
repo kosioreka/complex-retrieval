@@ -14,24 +14,32 @@ class Ranking:
         self.dl = {}
         corpus_len_sum = 0
         for k, d in corpus.items():
+            # document length
             self.dl[k] = float(len(d))
             corpus_len_sum += float(len(d))
         self.avgdl = corpus_len_sum / self.corpus_size
         self.corpus = corpus
+        # frequency of words per document
         self.f = {}
+        # frequency of documents containing a specific word (per word)
         self.df = {}
+        # normalization factor per word
         self.idf = {}
+        # word id
+        self.w_id = {}
         self.average_idf = 0
         self._initialize()
 
     def _initialize(self):
+        id = 1
         for idx, document in self.corpus.items():
             frequencies = Preprocessing.WordFrequency(document)
             self.f[idx] = frequencies
-
             for word, freq in iteritems(frequencies):
                 if word not in self.df:
                     self.df[word] = 0
+                    self.w_id[word] = id
+                    id += 1
                 self.df[word] += 1
         self._set_idf()
 
@@ -42,6 +50,13 @@ class Ranking:
         # for index in xrange(self.corpus_size):
         for index, doc in self.corpus.items():
             score = self._get_score(query, index)
+            scores[index] = score
+        return scores
+
+    def _get_vectors(self, query):
+        scores = {}
+        for index, doc in self.corpus.items():
+            score = self._get_vectors(query, index)
             scores[index] = score
         return scores
 
