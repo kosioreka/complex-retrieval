@@ -71,7 +71,23 @@ class Ranking:
             score = score[0:n]
             scores[query[0]] = score
             progress = i / len(queries)
-            print("progress:", "%.3f" % round(progress, 3))
+            # print("progress:", "%.3f" % round(progress, 3))
+            i += 1
+
+        return scores
+
+    def ranked_with_vector(self, queries, n):
+        """Returns the `n` most relevant documents according to `query`"""
+        scores = {}
+
+        i = 1
+        for query in queries:
+            score = self._get_scores(query[2])
+            score = sorted(score.items(), key=operator.itemgetter(1), reverse=True)
+            score = score[0:n]
+            scores[query[0]] = [query[2], score]
+            progress = i / len(queries)
+            # print("progress:", "%.3f" % round(progress, 3))
             i += 1
 
         return scores
@@ -93,7 +109,7 @@ class Ranking:
 
             scores[query[0]] = rel_vectors
             progress = i / len(queries)
-            print("progress:", "%.3f" % round(progress, 3))
+            # print("progress:", "%.3f" % round(progress, 3))
             i += 1
 
         return scores

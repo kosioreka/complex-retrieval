@@ -24,9 +24,8 @@ class FoldsTraining(object):
         self.queries = []
         self.queries_all = []
         self.paragraphs = []
-        self.corpus = {}
         self.paragraphs_dict = {}
-        self.corpus = []
+        self.corpus = {}
         self.read_folds(nb_folds)
         self.write_file('train', 0)
         self.write_file('test', 1)

@@ -13,9 +13,9 @@ def run_bm25(queries_dict, paragraphs_dict):
     return output_results(scores)
 
 
-def run_tfidf(queries_dict, paragraphs_dict):
+def run_tfidf(queries_dict, paragraphs_dict, topn=10):
     tfidf = TFIDFImproved(paragraphs_dict)
-    scores = tfidf.ranked(queries_dict, 10)
+    scores = tfidf.ranked(queries_dict, topn)
     return output_results(scores)
 
 
@@ -48,11 +48,11 @@ def main():
     queries_dict = preprocessing.get_raw_queries(qe_synonyms=False)
     paragraphs_dict = preprocessing.get_raw_paragraphs()
 
-    output_entries = run_bm25(queries_dict, paragraphs_dict)
+    # output_entries = run_bm25(queries_dict, paragraphs_dict)
     # save_scores_to_file(output_entries, "bm25_synonyms.out")
 
     output_entries = run_tfidf(queries_dict, paragraphs_dict)
-    Preprocessing.save_scores_to_file(output_entries, "tfidf_synonyms.out")
+    Preprocessing.save_scores_to_file(output_entries, "tfidf.out")
 
     #testing
     paragraph = preprocessing.para_text[output_entries[0].paragraph_id]
